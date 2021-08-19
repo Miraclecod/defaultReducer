@@ -1,0 +1,64 @@
+import * as types from '../../actions/types'
+
+const initialState = {
+  isFetching: false,
+  accessToken: '',
+  refreshToken: '',
+  error: false,
+  message: '',
+  firstTime: true,
+}
+
+const authReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case types.SIGN_IN_REQUESTED: {
+      return {
+        ...state,
+        isFetching: true,
+        error: false,
+        message: '',
+      }
+    }
+    case types.SIGN_IN_FAILED: {
+      return {
+        ...state,
+        isFetching: false,
+        error: true,
+        ...action.payload,
+      }
+    }
+    case types.SIGN_IN_SUCCEEDED: {
+      return {
+        ...state,
+        isFetching: false,
+        ...action.payload,
+      }
+    }
+    case types.SIGN_OUT_REQUESTED: {
+      return {
+        ...state,
+        isFetching: true,
+        error: false,
+        message: '',
+      }
+    }
+    case types.SIGN_OUT: {
+      return {
+        ...state,
+        isFetching: false,
+        accessToken: '',
+        refreshToken: '',
+      }
+    }
+    case types.ONBOARDING_CLOSE: {
+      return {
+        ...state,
+        firstTime: false,
+      }
+    }
+    default:
+      return state
+  }
+}
+
+export default authReducer
